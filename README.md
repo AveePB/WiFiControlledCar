@@ -3,6 +3,7 @@
 
 ## Table of contents
 - [Server Application](#server-app)
+  1. [API Gateway](#api-gateway)
 - [Client Application](#client-app)
 - [Usage](#usage)
 
