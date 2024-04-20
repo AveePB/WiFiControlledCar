@@ -3,11 +3,16 @@
 
 ## Table of contents
 - [Server Application](#server-app)
+    1. [Application Programming Interface](#api)
 - [Client Application](#client-app)
 - [Usage](#usage)
 
 ## Server Application <a name="server-app"></a>
-....
+It's a complex software that is run by the server.
+
+### Application Programming Interface (API) <a name="api"></a>
+We secure our REST API with OAuth 2.0.
+...
 
 ## Client Application <a name="client-app"></a>
 ...
