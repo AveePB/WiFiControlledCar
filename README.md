@@ -17,7 +17,7 @@ We secure our REST API with ***OAuth 2.0*** using ***JWTs***.
     - register user **POST** {***username***, ***password***};
     - authenticate user **POST** {***username***, ***password***};
 
-2. **User Controller** (functionalities):
+2. **Account Controller** (functionalities):
     - change username **PATCH** {***new username***, ***Bearer Token***};
     - change password **PATCH** {***old password***, ***new password***, ***Bearer Token***};
 
