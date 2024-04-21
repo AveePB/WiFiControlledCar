@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:authz_server_test_db
+    url: jdbc:h2:mem:resource_server_test_db
     username: sa
     password: password
     driver-class-name: org.hibernate.dialect.H2Dialect
@@ -9,4 +9,4 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+      show-sql: true
