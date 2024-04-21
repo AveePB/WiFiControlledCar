@@ -1,21 +1,33 @@
 # File hosting service (FHS)
-**FHS** is a complex project consisted of a ***server app*** and a ***client app***. It's an amateur project allowing to dive into the world of a software development.
+**FHS** is a complex project consisted of a ***authz server*** and a ***resource server***. It's an amateur project allowing to dive into the world of the software development.
 
-## Table of contents
-- [Server Application](#server-app)
-    1. [Application Programming Interface](#api)
-- [Client Application](#client-app)
-- [Usage](#usage)
+## Table of contents:
+1. [Authorization Server](#authz-server)
+2. [Resource Server](#resource-server)
+    - [Application Programming Interface](#api)
+3. [Usage](#usage)
 
-## Server Application <a name="server-app"></a>
-It's a complex software that is run by the server.
+## Authorization Server <a name="authz-server"></a>
+...
+
+## Resource Server <a name="resource-server"></a>
 
 ### Application Programming Interface (API) <a name="api"></a>
-We secure our REST API with OAuth 2.0.
+We secure our REST API with ***OAuth 2.0*** using ***JWTs***.
 ...
 
-## Client Application <a name="client-app"></a>
-...
+1. **Auth Controller** (functionalities):
+    - register user **POST** {***username***, ***password***};
+    - authenticate user **POST** {***username***, ***password***};
+
+2. **Account Controller** (functionalities): <- OPTIONAL
+    - change username **PATCH** {***new username***, ***Bearer Token***};
+    - change password **PATCH** {***old password***, ***new password***, ***Bearer Token***};
+
+3. **File Controller** (functionalities):
+    - upload file **POST** {***file***, ***Bearer Token***};
+    - remove file **DELETE** {***file name***, ***Bearer Token***};
+    - download file **GET** {***file URI***, ***Bearer Token***};
 
 ## Usage <a name="usage"></a>
 You're allowed to download and use the project in whatever way you like.
