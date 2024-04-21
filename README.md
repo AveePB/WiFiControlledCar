@@ -8,9 +8,10 @@
 3. [Usage](#usage)
 
 ## Authorization Server <a name="authz-server"></a>
-...
+It's run on the **8080 port**. The server is responsible for authentication and authorization of clients.
 
 ## Resource Server <a name="resource-server"></a>
+Server is listening on the **8083 port**. It manages resources stored in the database.
 
 ### Application Programming Interface (API) <a name="api"></a>
 We secure our REST API with ***OAuth 2.0*** using ***JWTs***.
