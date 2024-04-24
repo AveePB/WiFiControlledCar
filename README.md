@@ -1,7 +1,7 @@
-# File hosting service (FHS)
+# File Hosting Service (FHS)
 **FHS** is a complex project consisted of an ***authz server*** and a ***resource server***. It's an amateur project allowing to dive into the world of the software development.
 
-## Table of contents:
+## Table Of Contents:
 1. [Authorization Server](#authz-server)
 2. [Resource Server](#resource-server)
     - [Application Programming Interface](#api)
@@ -10,13 +10,17 @@
 ## Authorization Server <a name="authz-server"></a>
 It's run on the **8083 port**. The server is responsible for authentication and authorization of clients.
 
+### Key Components
 There are three key components to any authz server:
 - **Authentication**: handles the verification of the user credentials, such as the ***JWT*** to ensure that only authenticated users can obtain access to the data;
-- **Authorization**: checks if the authenticated user has required permissions to access restricted data. Once verified, access tokens are issued for the respective resource;
+- **Authorization**: verifies if the authenticated user has required permissions to access restricted data. Once verified, access tokens are issued for the respective resource;
 - **Token Management**: manages lifecycle, issuance and revocation of the access tokens;
 
-### Server operations
-...
+### How does it work?
+There are three steps to how an authz server works:
+- **Granting authorization**: grants the necessary permissions. After this process the authz server generates an authorization code. Authorization codes are sent to the user by sending them back to the registered redirect URI;
+- **Token request**: exchanges user's authorization code for an access token to obtain access to a protected resource. This is known as the ***token request***, whereby the client provides an authorization code, client ID, and client secret (if required). The authz server validates credentials and then issues a token;
+- **Accessing protected resources**: once the client has obtained an access token, they can use it to access the protected resource. The client will usually include the access token in the ***Authorization Header*** of future requests. The resource server will validate an access token with the authz server and return the protected resource to the client;
 
 ### Protocols
 ...
