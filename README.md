@@ -8,25 +8,25 @@
 3. [Usage](#usage)
 
 ## Authorization Server <a name="authz-server"></a>
-It's run on the **8083 port**. The server is responsible for authentication and authorization of clients.
+It's a server that is responsible for the ***authentication and authorization*** of clients. It manages the access to protected data by verifying clients and issuing tokens. It runs on the **8083** port.
 
 ### Key Components
 There are three key components to any authz server:
-- **Authentication**: handles the verification of the user credentials, such as the ***JWT*** to ensure that only authenticated users can obtain access to the data;
+- **Authentication**: handles the verification of the user credentials, such as the ***JWT*** or a user password to ensure that only authenticated users can obtain access to the data;
 - **Authorization**: verifies if the authenticated user has required permissions to access restricted data. Once verified, access tokens are issued for the respective resource;
 - **Token Management**: manages lifecycle, issuance and revocation of the access tokens;
 
 ### How does it work?
 There are three steps to how an authz server works:
 - **Granting authorization**: grants the necessary permissions. After this process the authz server generates an authorization code. Authorization codes are sent to the user by sending them back to the registered redirect URI;
-- **Token request**: exchanges user's authorization code for an access token to obtain access to a protected resource. This is known as the ***token request***, whereby the client provides an authorization code, client ID, and client secret (if required). The authz server validates credentials and then issues a token;
-- **Accessing protected resources**: once the client has obtained an access token, they can use it to access the protected resource. The client will usually include the access token in the ***Authorization Header*** of future requests. The resource server will validate an access token with the authz server and return the protected resource to the client;
+- **Token request**: exchanges user's authorization code for an access token to obtain access to a protected resource. The client provides an authorization code, client ID, and client secret (if required). The authz server validates credentials and then issues a token;
+- **Accessing protected resources**: once the client has obtained an access token, they can use it to access the protected resource. The client will usually include the access token in the ***Authorization Header*** of a request. The resource server will validate an access token with the authz server and return the protected resource to the client;
 
-### Protocols
+### Access Token
 ...
 
 ### OpenID Connect (OIDC)
-...
+OpenID Connect is an open and trusted authentication protocol that is an additional identity layer. An authz server issues ***id tokens*** alongside access tokens, providing a user authentication and an identity information in a single transaction. Those ***id tokens*** allow clients to ask a server about their basic information.
 
 ## Resource Server <a name="resource-server"></a>
 Server is listening on the **8080 port**. It manages resources stored in the database.
