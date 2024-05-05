@@ -8,7 +8,7 @@
     - [Access token](#authz-server-access-token)
     - [OpenID Connect](#authz-server-oidc)
 2. [Resource Server](#resource-server)
-    - [Application Programming Interface](#api)
+    - [Verifying access tokens](#resource-server-verifying-access-tokens")
 3. [Usage](#usage)
 
 ## Authorization Server <a name="authz-server"></a>
@@ -35,24 +35,17 @@ Access Token is used as the credential while calling the target API. The passed 
 OpenID Connect is an open and trusted authentication protocol that is an additional identity layer. An authz server issues ***id tokens*** alongside access tokens, providing a user authentication and an identity information in a single transaction. Those ***id tokens*** allow clients to ask a server about their basic information.
 
 ## Resource Server <a name="resource-server"></a>
-Server is listening on the **8080 port**. It manages resources stored in the database.
+The ***resource server*** handles authenticated requests after the application has obtained an access token. It runs on the **8080** port.
 
-### Application Programming Interface (API) <a name="api"></a>
-We secure our REST API with ***OAuth 2.0*** using ***JWTs***.
-...
+### Verifying Access Tokens <a name="resource-server-verifying-access-tokens"></a>
+The resource server will be getting requests from applications with an **HTTP Authorization** header containing an access token to determine whether to process the request or to reject it.
 
-1. **Auth Controller** (functionalities):
-    - register user **POST** {***username***, ***password***};
-    - authenticate user **POST** {***username***, ***password***};
+If you’re using ***self-encoded access tokens***, then verifying the tokens can be done entirely in the resource server without interacting with a database or external servers. If your tokens are stored in a database, then verifying the token is simply a database lookup on the token table.
 
-2. **Account Controller** (functionalities): <- OPTIONAL
-    - change username **PATCH** {***new username***, ***Bearer Token***};
-    - change password **PATCH** {***old password***, ***new password***, ***Bearer Token***};
+### Verifying Scopes <a name="resource-server-verifying-scopes"></a>
+The resource server needs to know the list of scopes that are associated with the access token. The server is responsible for denying the request if the scopes in the access token do not include the required scope to perform the designated action.
 
-3. **File Controller** (functionalities):
-    - upload file **POST** {***file***, ***Bearer Token***};
-    - remove file **DELETE** {***file name***, ***Bearer Token***};
-    - download file **GET** {***file URI***, ***Bearer Token***};
-
-## Usage <a name="usage"></a>
-You're allowed to download and use the project in whatever way you like.
+### Error Codes <a name="resource-server-error-codes"></a>
+The response should also include an appropriate ***error*** value depending on the type of error that occurred:
+- **invalid_request (HTTP 400)**: the request is missing a parameter, or is otherwise malformed;
+- **invalid_token (HTTP 401)**: the access token is expired, revoked, malformed, or invalid for other reasons. The client can obtain a new access token and try again;
