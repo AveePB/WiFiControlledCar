@@ -1,14 +1,19 @@
+#pragma once
 #ifndef CARCHASSIS_H 
+#define CARCHASSIS_H
 #include <Arduino.h>
 
 // GPIO pins
-const int ENA = 19;
-const int IN1 = 21;
-const int IN2 = 3;
+extern const int ENA;
+extern const int IN1;
+extern const int IN2;
 
-const int ENB = 23;
-const int IN3 = 1;
-const int IN4 = 22;
+extern const int ENB;
+extern const int IN3;
+extern const int IN4;
+
+// Regular speed param
+extern const int SPEED;
 
 class Motors {
     public:

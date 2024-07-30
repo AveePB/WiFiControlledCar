@@ -1,25 +1,25 @@
 #include <Arduino.h>
-#include "CarChassis.h"
+#include <ESPAsyncWebServer.h>
+#include <SPIFFS.h>
+#include <WiFi.h>
 
-// Components
+#include "car/chassis.h"
+#include "web/server.h"
+
 Motors motors;
+WebApp webApp;
 
-// Setup function
 void setup() {
+    // Set up WiFi network
+    SPIFFS.begin();
+    WiFi.softAP(SSID, PASSWD);
+
+    // Set up components
     motors.initialize();
+
+    webApp.attachMotors(motors);
+    webApp.initializeRoutes();
+
 }
 
-// Loop function
-void loop() {
-    motors.moveForward();
-    delay(3000);
-    
-    motors.stop();
-    delay(3000);
-
-    motors.moveBackward();
-    delay(3000);
-
-    motors.stop();
-    delay(3000);
-}
+void loop() { }
