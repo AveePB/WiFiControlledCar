@@ -1,6 +1,6 @@
 #pragma once
-#ifndef CARCHASSIS_H 
-#define CARCHASSIS_H
+#ifndef CHASSIS_H 
+#define CHASSIS_H
 #include <Arduino.h>
 
 // GPIO pins
