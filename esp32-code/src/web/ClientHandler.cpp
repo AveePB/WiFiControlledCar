@@ -1,14 +1,8 @@
-#include <Arduino.h>
-#include <WiFi.h>
 #include <WebServer.h>
+#include "web/ClientHandler.h"
 #include "car/chassis.h"
 
-// Constants
-const int BAUD_RATE = 9600;
-const int PORT = 80;
-const char* SSID = "Esp32_2WD";
-const char* PASSWD = "P0lsl2024";
-const char* htmlPage = R"html(
+const char* HTML_PAGE = R"html(
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,81 +123,29 @@ const char* htmlPage = R"html(
 </html>
 )html";
 
-
-// URLs
-const char* STOP_URL = "/stop";
-const char* FORWARD_URL = "/forward";
-const char* BACKWARD_URL = "/backward";
-const char* LEFT_URL = "/left";
-const char* RIGHT_URL = "/right";
-
-// IP addresses
-IPAddress localIP(192,168,1,1);
-IPAddress gateway(192,168,1,1);
-IPAddress subnetMask(255,255,255,0);
-
-// Components
-WebServer server(PORT);
-Motors motors;
-
-// Function declarations
-void handleRoot();
-void handleMovement();
-void handleNotFound();
-
-void setup() {
-    // Initialize serial communication
-    Serial.begin(BAUD_RATE);
-
-    motors.initialize();
-
-    // Initialize WiFi
-    WiFi.softAP(SSID, PASSWD);
-    WiFi.softAPConfig(localIP, gateway, subnetMask);
-    delay(1000);
-
-    // Initialize server
-    server.on("/", handleRoot);
-    server.on(STOP_URL, []() { 
-        handleMovement();
-        motors.stop();
-    });
-    server.on(FORWARD_URL, []() { 
-        handleMovement();
-        motors.moveForward();
-    });
-
-    server.on(BACKWARD_URL, []() { 
-        handleMovement();
-        motors.moveBackward();
-    });
-    server.on(LEFT_URL, []() { 
-        handleMovement();
-        motors.turnLeft();
-    });
-    server.on(RIGHT_URL, []() { 
-        handleMovement();
-        motors.turnRight();
-    });
-    server.onNotFound(handleNotFound);
-    server.begin();
+void ClientHandler::handleRoot(WebServer* ws) { 
+    ws->send(200, "text/html", HTML_PAGE);
 }
 
-void loop() {
-    server.handleClient();
+void ClientHandler::handleNotFound(WebServer* ws) { 
+    ws->send(404, "text/plain", "Not Found 404");
 }
 
-void handleRoot() {
-    Serial.println("Client tries to access the root endpoint");
-    server.send(200, "text/html", htmlPage);
-}
+void ClientHandler::handleMovement(WebServer* ws, Motors* motors, Movement movement) { 
+    if (movement == Movement::Stop)
+        motors->stop();
 
-void handleMovement() {
-    Serial.println("Client tries to access the movement endpoint");
-    server.send(200, "text/html", htmlPage);
-}
+    else if (movement == Movement::Forward)
+        motors->moveForward();    
 
-void handleNotFound() {
-    Serial.println("Client tries to access the invalid endpoint");
-    server.send(404, "text/plain", "Not Found 404");
+    else if (movement == Movement::Backward)
+        motors->moveBackward();
+
+    else if (movement == Movement::Left)
+        motors->turnLeft();
+
+    else if (movement == Movement::Right)
+        motors->turnRight();
+
+    ws->send(200, "text/html", HTML_PAGE);
 }

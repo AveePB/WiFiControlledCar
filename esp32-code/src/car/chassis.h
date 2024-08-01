@@ -1,7 +1,6 @@
 #pragma once
 #ifndef CHASSIS_H 
 #define CHASSIS_H
-#include <Arduino.h>
 
 // GPIO pins
 extern const int ENA;
@@ -14,6 +13,10 @@ extern const int IN4;
 
 // Regular speed param
 extern const int SPEED;
+
+enum class Movement {
+    Stop, Forward, Backward, Left, Right
+};
 
 class Motors {
     public:
