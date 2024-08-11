@@ -2,7 +2,7 @@
 
 This project focuses on combining multiple IoT skills to gain valuable experience. The ESP32 hosts a web application that is used to control the 2WD car.
 
-![Image](image_url_here)
+<img src="2wd_car.jpg" alt="drawing" width="400"/>
 
 ## Electronic Components
 
